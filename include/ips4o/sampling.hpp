@@ -54,13 +54,11 @@ template <class It, class RandomGen>
 void selectSample(It begin, const It end,
                   typename std::iterator_traits<It>::difference_type num_samples,
                   RandomGen&& gen) {
-    using std::swap;
-
     auto n = end - begin;
     while (num_samples--) {
         const auto i = std::uniform_int_distribution<
                 typename std::iterator_traits<It>::difference_type>(0, --n)(gen);
-        swap(*begin, begin[i]);
+        std::iter_swap(begin, begin + i);
         ++begin;
     }
 }
